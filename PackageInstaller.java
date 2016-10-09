@@ -1,3 +1,12 @@
+/**
+ * The PackageInstaller program implements an 
+ * topological sort approach to a coding challenge 
+ * that lists the order of dependencies. 
+ * 
+ * @author hongdaxiao
+ * @version 1.0
+ * @since 2016-10-09
+ */
 import java.util.*;
 public class PackageInstaller {
 	// adjacency list representation
@@ -11,7 +20,10 @@ public class PackageInstaller {
 	// result in string format
 	public String [] result;
 	
-	// topological sort and check cycles
+	/* topological sort and check cycles
+	 * @param name Current string to perform depth-first search. 
+	 * @return boolean Check whether a cycle exists.
+	 */
 	private boolean dfs(String name) {
 		// check if visited before
 		if(visited.containsKey(name) && visited.get(name) == 1){
@@ -33,7 +45,14 @@ public class PackageInstaller {
 		visited.put(name, 1);
 		return true;
 	}
-	public String [] installPackage(String [] input) {
+	/*
+	 * This program parses the input, builds the graph,
+	 * and performs the actual sorting and listing step.
+	 * 
+	 * @param input The input string that is yet to be parsed.
+	 * @exception IllegalArgumentException Check for invalid inputs.
+	 */
+	public void installPackage(String [] input) {
 		res = new ArrayList<String>();
 		graph = new List[input.length * 2];
 		packageMap = new HashMap<String, Integer>();
@@ -76,23 +95,30 @@ public class PackageInstaller {
 		for(int k = 0; k < res.size(); k++){
 		    result[k] = res.get(res.size() - k - 1);
 		}
-		return result;
+		for(String curr: result){
+			System.out.print(curr);
+			if(!curr.equals(result[result.length-1]))
+			System.out.print(",");
+		}
+		System.out.println("");
+		return;
 	}
+	/*
+	 * Main method that uses the two examples given in the
+	 * coding challenge instructions.
+	 * @param args Unused.
+	 */
 	public static void main(String [] args) {
 		PackageInstaller installer = new PackageInstaller();
 		// example 1
+		System.out.println("Running example 1 with valid input...");
 		String [] in1 = {"KittenService: ","Leetmeme: Cyberportal",
 			"Cyberportal: Ice","CamelCaser: KittenService","Fraudstream: Leetmeme","Ice: "};
-		String [] res1 = installer.installPackage(in1);
-		for(String t1: res1){
-			System.out.println(t1);
-		}
+		installer.installPackage(in1);
+
 		// example 2
-		System.out.println("----------------------------------");
+		System.out.println("Running example 2 that contains a cycle... Should throw exception");
 		String [] in2 = {"KittenService: ","Leetmeme: Cyberportal","Cyberportal: Ice","CamelCaser: KittenService","Fraudstream: ","Ice: Leetmeme"};
-		String [] res2 = installer.installPackage(in2);
-		for(String t2: res2){
-			System.out.println(t2);
-		}
+		installer.installPackage(in2);
 	}
 }

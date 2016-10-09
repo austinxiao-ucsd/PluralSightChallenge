@@ -1,3 +1,9 @@
+/*
+ * Test cases for the PluralSight coding challenge.
+ * Applied TDD and with the test first approach.
+ * @author hongdaxiao
+ * @since 2016-10-9
+ */
 import static org.junit.Assert.*;
 import java.util.Arrays;
 import org.junit.Before;
